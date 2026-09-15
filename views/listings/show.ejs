@@ -16,6 +16,12 @@
         <!-- <li><%= listing.image %></li> -->
     </ul>
 
+    <a href="/listings/<%= listing._id %>/edit">Click to Edit</a>
+
+    <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+        <button>Delete</button>
+    </form>
+
     
 </body>
 </html>
