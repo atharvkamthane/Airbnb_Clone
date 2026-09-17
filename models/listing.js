@@ -12,12 +12,22 @@ const listingSchema=new Schema({
     price:Number,
     location:String,
     Country:String,
-    image:{
-        type:String,
-        default:"for developer",
+    // image:{
+    //     type:String,
+    //     default:"for developer",
 
-        set:(v)=>v===""?"pasted url":"v"
+    //     set:(v)=>v===""?"pasted url":"v"
+    // }
+    image: {
+    filename: {
+        type: String,
+        default: "listingimage"
+    },
+    url: {
+        type: String,
+        default: "https://images.unsplash.com/..."
     }
+}
 
 })
 
