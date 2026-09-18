@@ -94,19 +94,7 @@ app.delete("/listings/:id",async (req,res)=>{
 })
 
 
-// app.get("/testListing",async (.req,res)=>{
-//     let sampleListing=new Listing({
-//         title:"My home",
-//         price:1200,
-//         description:"Sweet Home vibes"
 
-//     })
-//     await sampleListing.save();
-
-
-
-//     res.send("saved");
-// })
 
 app.get("/",(req,res)=>{
     res.send("this is home route");
