@@ -6,32 +6,53 @@
     <title>Airbnb</title>
 </head> -->
 <% layout("/layouts/boilerplate") -%>
+
 <body>
-    <h2>create a new listing</h2>
+    
+    <div class="row offset-2">
+        <div class="col-8">
+            <h2 class="mt-2">create a new listing</h2>
     <form method="post" action="/listings">
-        <input name="listing[title]"  placeholder="Enter property title">
+        <div class="mb-3"><label for="title" class="form-label">Title</label>
+            <input name="listing[title]" placeholder="Enter property title" class="form-control">
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">description</label>
+            <textarea name="listing[description]"  class="form-control" rows="3" >description here</textarea>
+        </div>
+        <div class="row">
+        <div class="mb-3 col-md-6">
+            <label for="price" class="form-label">price</label>
+            <input name="listing[price]" placeholder="Enter price here" class="form-control">
+        </div>
+        
+        <div class="mb-3 col-md-6">
+            <label for="Location" class="form-label">Location</label>
+            <input name="listing[location]" placeholder="enter property Location" class="form-control">
+        </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input name="listing[image]" placeholder="enter property imgages/URL" class="form-control">
+        </div>
+        
+        <div class="mb-3">
+            <label for="country" class="form-label">country</label>
+            <input name="listing[country]" placeholder="enter property country" class="form-control">
+        </div>
         <br>
-        <br>
-        <input name="listing[description]"  placeholder="description here">
-        <br>
-        <br>
-        <input name="listing[price]"  placeholder="Enter price here">
-        <br>
-        <br>
-        <input name="listing[location]"  placeholder="enter property Location">
-        <br>
-        <br>
-        <input name="listing[image]"  placeholder="enter property imgages/URL">
-        <br>
-        <br>
-        <input name="listing[country]"  placeholder="enter property country">
-        <br>
-        <br>
-        <br>
-        <button>Add</button>
+       
+        <button class="btn btn-dark add-btn">Add</button>
+        <br><br>
 
 
     </form>
-    
+
+    </div>
+    </div>
+
+
 </body>
 <!-- </html> -->

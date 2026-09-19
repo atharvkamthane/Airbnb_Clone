@@ -6,23 +6,47 @@
     <title>Airnbnb</title>
 </head> -->
 <% layout("/layouts/boilerplate") -%>
-<body>
-    <h2>Listing Details</h2>
 
-    <ul>
+<body>
+    <div class="row">
+        <div class="col-8 offset-3">
+    
+    <div class="card col-md-6 offset-3 show-card">
+        <h2>Listing Details</h2>
+        <div class="card">
+            <img src="<%=listing.image.url%>" class="card-img-top show-image" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= listing.title %></h5>
+                <p class="card-text"><%= listing.description %></p><br>
+                &#8377;<%= listing.price.toLocaleString('en-IN') %><br>
+                <%= listing.location %><br>
+                <%= listing.country %>
+
+
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- <ul>
         <li><%= listing.title %></li>
         <li><%= listing.description %></li>
         <li>&#8377;<%= listing.price.toLocaleString('en-IN') %></li>
         <li><%= listing.location %></li>
-        <!-- <li><%= listing.image %></li> -->
-    </ul>
-
-    <a href="/listings/<%= listing._id %>/edit">Click to Edit</a>
-
-    <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
-        <button>Delete</button>
-    </form>
+        <li><%= listing.image %></li>
+    </ul> -->
 
     
+
+    
+
+    </div>
+    </div>
+    <div class="btns">    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 add-btn offset-3">Edit</a>
+<form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+        <button class="btn btn-dark col-2 add-btn offset-5">Delete</button>
+    </form></div>
+
+
 </body>
 <!-- </html> -->
