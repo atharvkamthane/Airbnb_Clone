@@ -121,4 +121,8 @@ body{
 
 }
 /*  */
+.headings{
+    font-weight: 600 !important;
+    font-size: 2.5rem;
 
+}

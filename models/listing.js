@@ -11,7 +11,7 @@ const listingSchema=new Schema({
     description:String,
     price:Number,
     location:String,
-    Country:String,
+    country:String,
     // image:{
     //     type:String,
     //     default:"for developer",
