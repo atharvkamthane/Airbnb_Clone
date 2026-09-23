@@ -4,6 +4,8 @@ const mongoose=require("mongoose");
 const path=require("path");
 const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
+const wrapAsync=require("./utils/wrapAsync.js");
+const ExpressError=require("./utils/ExpressError.js")
 
 
 
@@ -37,11 +39,9 @@ app.listen(8080,()=>{
 //Index Route
 
 app.get("/listings",async (req,res)=>{
-
-    const allListings=await Listing.find({}).then(console.log(res)).catch(err=>{console.log(err)});
+    const allListings=await Listing.find({});
     res.render("listings/index",{allListings});
-
-})
+});
 //New Route
 
 app.get("/listings/new", (req, res) => {
@@ -58,13 +58,17 @@ app.get("/listings/:id",async (req,res)=>{
 
 //Create Route
 
-app.post("/listings",async (req,res)=>{
-    // let listing=req.body.listing;
+app.post("/listings",wrapAsync(async (req,res)=>{
+    
+        // let listing=req.body.listing;
     const newListing=new Listing(req.body.listing);
     await newListing.save();
     // console.log(listing);
     res.redirect("/listings")
-})
+
+    })
+    
+);
 
 //Edit route
 
@@ -93,9 +97,19 @@ app.delete("/listings/:id",async (req,res)=>{
     res.redirect("/listings")
 })
 
-
-
-
 app.get("/",(req,res)=>{
     res.send("this is home route");
 })
+
+app.use((req,res,next)=>{
+    next(new ExpressError(404,"Page Not Found!"));
+});
+
+
+app.use((err,req,res,next)=>{
+    let {statusCode,message}=err;
+
+    res.status(statusCode).send(message);
+})
+
+
