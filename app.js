@@ -41,15 +41,29 @@ const validateListing=(req,res,next)=>{
 
 
 
-main().then(()=>{
-    console.log("database connected")
-}).catch(err=>{
-    console.log(err);
-})
+// main().then(()=>{
+//     console.log("database connected")
+// }).catch(err=>{
+//     console.log(err);
+// })
 
-app.listen(8080,()=>{
-    console.log("port is listening")
-});
+async function startServer() {
+    try {
+        await mongoose.connect("mongodb://127.0.0.1:27017/airbnb");
+        console.log("database connected");
+
+        app.listen(8080, () => {
+            console.log("server is listening on port 8080");
+        });
+    } catch (error) {
+        console.error("database connection failed:", error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
+
+
 
 //Index Route
 
@@ -80,8 +94,6 @@ app.post("/listings",validateListing,wrapAsync(async (req,res)=>{
 
     // }
 
-    
-    
         // let listing=req.body.listing;
     const newListing=new Listing(req.body.listing);
     await newListing.save();
@@ -94,7 +106,7 @@ app.post("/listings",validateListing,wrapAsync(async (req,res)=>{
 
 //Edit route
 
-app.get("/listings/:id/edit",validateListing,wrapAsync(async (req,res)=>{
+app.get("/listings/:id/edit",wrapAsync(async (req,res)=>{
     let {id}=req.params;
     const listing=await Listing.findById(id);
     res.render("listings/edit.ejs",{listing});
@@ -139,6 +151,3 @@ app.use((err,req,res,next)=>{
 })
 
 
-app.listen(8080,()=>{
-    console.log("server is listening on port 8080");
-})
