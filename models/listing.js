@@ -28,7 +28,13 @@ const listingSchema=new Schema({
     url: {
         type: String,
         default: "https://images.unsplash.com/..."
-    }
+    },
+    reviews:[
+        {
+            type:Schema.Types.ObjectId,
+            
+        }
+    ]
 }
 
 })
