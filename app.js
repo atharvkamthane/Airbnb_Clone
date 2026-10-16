@@ -6,7 +6,7 @@ const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError.js");
-const {listingSchema,reviewShema}=require("./Schema.js");
+const {listingSchema,reviewSchema}=require("./Schema.js");
 const Review=require("./models/review.js")
 
 
@@ -97,7 +97,7 @@ app.get("/listings/new", (req, res) => {
 app.get("/listings/:id",wrapAsync(
     async (req,res)=>{
     let {id}=req.params;
-    const listing=await Listing.findById(id);
+    const listing=await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs",{listing});
 }))
 
