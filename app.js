@@ -6,11 +6,12 @@ const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError.js");
-const {listingSchema,reviewSchema}=require("./Schema.js");
-const Review=require("./models/review.js");
+// const {listingSchema,reviewSchema}=require("./Schema.js");
+// const Review=require("./models/review.js");
 
 
 const listings=require("./routes/listing.js");
+const reviews=require("./routes/review.js")
 
 
 
@@ -30,32 +31,9 @@ app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,"public")))
 
 
-const validateListing=(req,res,next)=>{
-    let {error}=listingSchema.validate(req.body);
-    
-
-    if(error){
-        let errMsg=error.details.map((el)=>el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }else{
-        next();
-    }
-
-}
 
 
-const validateReview=(req,res,next)=>{
-    let {error}=reviewSchema.validate(req.body);
-    
 
-    if(error){
-        let errMsg=error.details.map((el)=>el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }else{
-        next();
-    }
-
-}
 
 
 
@@ -83,37 +61,7 @@ startServer();
 
 
 app.use("/listings",listings);
-
-//reviews
-//post route fro review
-
-app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
-    let listing=await Listing.findById(req.params.id);
-    let newReview=new Review(req.body.review);
-
-    listing.reviews.push(newReview);
-
-    await newReview.save();
-    await listing.save();
-
-    console.log("new review saved");
-    // res.send("new review saved");
-
-    res.redirect(`/listings/${listing._id}`);
-}))
-
-
-//post delete route for review
-
-app.delete("/listings/:id/review/:reviewId",wrapAsync(async(req,res)=>{
-    let {id,reviewId}=req.params;
-    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
-    await Review.findById(reviewId);
-
-    res.redirect(`/listings/${id}`);
-}))
-
-
+app.use("/listings/:id/reviews",reviews);
 
 app.get("/",(req,res)=>{
     res.send("this is home route");
